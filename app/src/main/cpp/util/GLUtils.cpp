@@ -1,5 +1,5 @@
 //
-// Created by jian.yang on 2023/8/21.
+// Created by yeungeek on 2023/8/21.
 //
 
 #include "GLUtils.h"
@@ -7,9 +7,7 @@
 
 GLuint GLUtils::LoaderShader(GLenum shaderType, const char *source) {
     LOGD("###### Loader Shader");
-    GLuint shader = 0;
-
-    shader = glCreateShader(shaderType);
+    GLuint shader = glCreateShader(shaderType);
     if (shader) {
         glShaderSource(shader, 1, &source, NULL);
         glCompileShader(shader);

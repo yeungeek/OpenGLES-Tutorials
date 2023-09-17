@@ -1,10 +1,11 @@
 //
-// Created by jian.yang on 2023/8/8.
+// Created by yeungeek on 2023/8/8.
 //
 
 #include "ShaderContext.h"
 #include "../util/AndroidDebug.h"
 #include "basic/TriangleSample.h"
+#include "basic/ShapeSample.h"
 
 ShaderContext *ShaderContext::mContext = nullptr;
 
@@ -19,8 +20,8 @@ ShaderContext::ShaderContext(int id) {
         case SAMPLE_TYPE_TRIANGLE:
             mBaseSample = new TriangleSample();
             break;
-        case SAMPLE_TYPE_TRIANGLE_1:
-//            mBaseSample
+        case SAMPLE_TYPE_SHAPE_RECTANGLE:
+            mBaseSample = new ShapeSample();
             break;
         default:
             mBaseSample = new TriangleSample();

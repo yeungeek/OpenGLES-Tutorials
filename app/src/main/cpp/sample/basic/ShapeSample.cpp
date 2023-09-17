@@ -1,27 +1,28 @@
 //
-// Created by yeungeek on 2023/8/21.
+// Created by yeungeek on 2023/9/15.
 //
-#include "TriangleSample.h"
+#include "ShapeSample.h"
 #include "../../util/GLUtils.h"
 #include "../../util/AndroidDebug.h"
 
-GLfloat mVertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+GLfloat mShapeVertices[] = {
+        0.0f, 0.0f,
+        -0.5f, -0.5f,
+        0.5f, -0.5f,
+        0.5f, 0.5f,
+        -0.5f, 0.5f,
+        -0.5f, -0.5f
 };
 
-const GLsizei stride = 3 * sizeof(float);
-
-TriangleSample::TriangleSample() {
-    LOGD("###### TriangleSample init");
+ShapeSample::ShapeSample() {
+    LOGD("###### Rectangle Shape");
 }
 
-TriangleSample::~TriangleSample() {
+ShapeSample::~ShapeSample() {
 
 }
 
-void TriangleSample::OnCreate() {
+void ShapeSample::OnCreate() {
     if (mProgram != 0) {
         return;
     }
@@ -40,7 +41,7 @@ void TriangleSample::OnCreate() {
             "out vec4 fragColor;                          \n"
             "void main()                                  \n"
             "{                                            \n"
-            "   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"
+            "   fragColor = vec4 ( 1.0, 1.0, 0.0, 1.0 );  \n"
             "}                                            \n";
 
     mProgram = GLUtils::CreateProgram(vertexShader, fragmentShader, mVertexShaderId,
@@ -50,7 +51,7 @@ void TriangleSample::OnCreate() {
     LOGD("###### Program init %d", mProgram);
 }
 
-void TriangleSample::OnDraw(int width, int height) {
+void ShapeSample::OnDraw(int width, int height) {
     if (mProgram == 0) {
         return;
     }
@@ -59,16 +60,16 @@ void TriangleSample::OnDraw(int width, int height) {
     glClear(GL_COLOR_BUFFER_BIT);
 
     //load vertex data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, mShapeVertices);
     glEnableVertexAttribArray(0);
 
     //draw
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
 
     glDisableVertexAttribArray(0);
 }
 
-void TriangleSample::OnDestroy() {
+void ShapeSample::OnDestroy() {
     glUseProgram(GL_NONE);
     if (mProgram) {
         glDeleteProgram(mProgram);

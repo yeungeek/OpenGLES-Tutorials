@@ -27,11 +27,11 @@ open class ShaderRenderer(sample: Sample) : Renderer {
         nativeRender.native_OnDrawFrame()
     }
 
-    fun create() {
+    fun onCreate() {
         nativeRender.native_Init(mSample.id)
     }
 
-    fun destroy() {
+    fun onDestroy() {
         nativeRender.native_UnInit()
     }
 }

@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.yeungeek.opengltutorial.renderer.ShaderGLSurfaceView
 import com.yeungeek.opengltutorial.renderer.ShaderRenderer
-import com.yeungeek.opengltutorial.renderer.TriangleRenderer
 
 @Composable
 fun GLShader(
@@ -25,7 +24,7 @@ fun GLShader(
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
                 Lifecycle.Event.ON_CREATE -> {
-                    renderer.create()
+                    renderer.onCreate()
                 }
 
                 Lifecycle.Event.ON_RESUME -> {
@@ -37,7 +36,7 @@ fun GLShader(
                 }
 
                 Lifecycle.Event.ON_DESTROY -> {
-                    renderer.destroy()
+                    renderer.onDestroy()
                 }
 
                 else -> {

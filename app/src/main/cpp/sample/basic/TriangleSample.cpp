@@ -28,10 +28,10 @@ void TriangleSample::OnCreate() {
 
     char vertexShader[] =
             "#version 300 es                          \n"
-            "layout(location = 0) in vec4 vPosition;  \n"
+            "layout(location = 0) in vec3 vPosition;  \n"
             "void main()                              \n"
             "{                                        \n"
-            "   gl_Position = vPosition;              \n"
+            "   gl_Position = vec4(vPosition.x,vPosition.y,vPosition.z,1.0);              \n"
             "}                                        \n";
 
     char fragmentShader[] =
@@ -58,6 +58,7 @@ void TriangleSample::OnDraw(int width, int height) {
     //clear
     glClear(GL_COLOR_BUFFER_BIT);
 
+    glUseProgram(mProgram);
     //load vertex data
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
     glEnableVertexAttribArray(0);

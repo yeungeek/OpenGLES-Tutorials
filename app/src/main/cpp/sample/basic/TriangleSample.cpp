@@ -14,7 +14,7 @@ GLfloat mVertices[] = {
 const GLsizei stride = 3 * sizeof(float);
 
 TriangleSample::TriangleSample() {
-    LOGD("###### TriangleSample init");
+    LOGD("###### TriangleSample Init");
 }
 
 TriangleSample::~TriangleSample() {

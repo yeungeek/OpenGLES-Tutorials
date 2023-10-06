@@ -2,7 +2,7 @@ package com.yeungeek.opengltutorial
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Toast
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,10 +15,13 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.adaptive.calculateDisplayFeatures
 import com.yeungeek.opengltutorial.data.Sample
 import com.yeungeek.opengltutorial.ui.components.SampleListContent
 import com.yeungeek.opengltutorial.ui.theme.OpenGLTutorialTheme
+import com.yeungeek.opengltutorial.util.FileUtil
+import kotlinx.coroutines.*
 
 class MainActivity : ComponentActivity() {
 
@@ -39,6 +42,13 @@ class MainActivity : ComponentActivity() {
                         startActivity(ShaderDetailActivity.newIntent(this, sample))
                     }
                 }
+            }
+        }
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            FileUtil.copyAssetsToPrivate(this@MainActivity.applicationContext)
+            withContext(Dispatchers.Main) {
+                Log.d("Main", "###### copy asset files success")
             }
         }
     }

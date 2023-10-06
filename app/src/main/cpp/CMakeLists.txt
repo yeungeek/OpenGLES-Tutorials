@@ -43,6 +43,9 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         # Provides a relative path to your source file(s).
         ${src-files})
 
+#add_library(STB_IMAGE "${CMAKE_SOURCE_DIR}/stb_image.cpp")
+#set(LIBS ${LIBS} STB_IMAGE)
+
 # Specifies libraries CMake should link to your target library. You
 # can link libraries from various origins, such as libraries defined in this
 # build script, prebuilt third-party libraries, or Android system libraries.

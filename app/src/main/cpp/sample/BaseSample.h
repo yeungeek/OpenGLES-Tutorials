@@ -12,6 +12,9 @@
 #define SAMPLE_TYPE_SHAPE_RECTANGLE SAMPLE_TYPE + 2
 #define SAMPLE_TYPE_COORDINATE SAMPLE_TYPE + 3
 
+#define BASE_ASSET_PATH "/data/data/com.yeungeek.opengltutorial/files/"
+#define BASE_TEXTURES_PATH BASE_ASSET_PATH "textures/"
+
 class BaseSample {
 public:
     BaseSample() {

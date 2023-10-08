@@ -11,7 +11,7 @@ GLfloat mVertices[] = {
         0.0f, 0.5f, 0.0f
 };
 
-const GLsizei stride = 3 * sizeof(float);
+const GLsizei stride = 3 * sizeof(GLfloat);
 
 TriangleSample::TriangleSample() {
     LOGD("###### TriangleSample Init");
@@ -54,7 +54,6 @@ void TriangleSample::OnDraw(int width, int height) {
     if (mProgram == 0) {
         return;
     }
-
     //clear
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -62,7 +61,6 @@ void TriangleSample::OnDraw(int width, int height) {
     //load vertex data
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
     glEnableVertexAttribArray(0);
-
     //draw
     glDrawArrays(GL_TRIANGLES, 0, 3);
 

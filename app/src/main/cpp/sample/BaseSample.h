@@ -11,9 +11,13 @@
 #define SAMPLE_TYPE_TRIANGLE SAMPLE_TYPE + 1
 #define SAMPLE_TYPE_SHAPE_RECTANGLE SAMPLE_TYPE + 2
 #define SAMPLE_TYPE_TEXTURE SAMPLE_TYPE + 3
+#define SAMPLE_TYPE_TEXTURE_BUFFER SAMPLE_TYPE + 4
 
 #define BASE_ASSET_PATH "/data/data/com.yeungeek.opengltutorial/files/"
 #define BASE_TEXTURES_PATH BASE_ASSET_PATH "textures/"
+
+#define CONTAINER_PATH BASE_TEXTURES_PATH "container.jpg"
+#define HEAD_PATH BASE_TEXTURES_PATH "head.png"
 
 class BaseSample {
 public:

@@ -7,6 +7,7 @@
 #include "basic/TriangleSample.h"
 #include "basic/ShapeSample.h"
 #include "basic/TextureSample.h"
+#include "basic/TextureBufferSample.h"
 
 ShaderContext *ShaderContext::mContext = nullptr;
 
@@ -26,6 +27,9 @@ ShaderContext::ShaderContext(int id) {
             break;
         case SAMPLE_TYPE_TEXTURE:
             mBaseSample = new TextureSample::TextureSample();
+            break;
+        case SAMPLE_TYPE_TEXTURE_BUFFER:
+            mBaseSample = new TexBuffer::TextureBufferSample();
             break;
         default:
             mBaseSample = new TriangleSample();

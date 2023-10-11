@@ -7,7 +7,8 @@
 
 #include "../BaseSample.h"
 
-#define CONTAINER_PATH BASE_TEXTURES_PATH "container.jpg"
+
+
 namespace TextureSample {
     class TextureSample : public BaseSample {
     public:

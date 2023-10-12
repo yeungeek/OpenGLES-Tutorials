@@ -31,7 +31,6 @@ include_directories(
         sample/basic
         third_party/glm
 )
-
 file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/*.cpp
         ${CMAKE_SOURCE_DIR}/util/*.cpp

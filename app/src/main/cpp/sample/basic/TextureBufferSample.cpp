@@ -54,7 +54,7 @@ namespace TexBuffer {
                                 "uniform sampler2D ourTexture;\n"
                                 "\n"
                                 "void main() {\n"
-                                "    FragColor = texture(ourTexture, TexCoord) * vec4(ourColor, 1.0);;\n"
+                                "    FragColor = texture(ourTexture, TexCoord) * vec4(ourColor, 1.0);\n"
                                 "}";
 
         mProgram = GLUtils::CreateProgram(vertexShader, fragmentShader, mVertexShaderId,

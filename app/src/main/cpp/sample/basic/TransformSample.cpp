@@ -63,7 +63,7 @@ namespace Transform {
                               "layout (location = 1) in vec2 aTexCoord;\n"
                               "\n"
                               "out vec2 TexCoord;\n"
-                              "uniform vec4 transform;\n"
+                              "uniform mat4 transform;\n"
                               "\n"
                               "void main() {\n"
                               "    gl_Position = transform * vec4(aPos, 1.0);\n"
@@ -164,7 +164,6 @@ namespace Transform {
         glUseProgram(mProgram);
         GLint transLoc = glGetUniformLocation(mProgram, "transform");
 
-        GLUtils::CheckGLError("###### glUniformMatrix4fv");
         glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
         glBindVertexArray(mVAO);

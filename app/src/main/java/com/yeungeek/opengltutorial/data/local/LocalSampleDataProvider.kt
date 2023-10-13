@@ -8,6 +8,7 @@ object LocalSampleDataProvider {
     const val SAMPLE_TYPE_SHAPE_RECTANGLE = SAMPLE_TYPE + 2
     const val SAMPLE_TYPE_TEXTURE = SAMPLE_TYPE + 3
     const val SAMPLE_TYPE_TEXTURE_BUFFER = SAMPLE_TYPE + 4
+    const val SAMPLE_TYPE_TRANSFORM = SAMPLE_TYPE + 5
 
     val sample = Sample(SAMPLE_TYPE_TRIANGLE, "Triangle", "Basic Triangle")
 
@@ -15,6 +16,7 @@ object LocalSampleDataProvider {
         Sample(SAMPLE_TYPE_TRIANGLE, "Triangle", "Basic Triangle"),
         Sample(SAMPLE_TYPE_SHAPE_RECTANGLE, "Rectangle", "Shape"),
         Sample(SAMPLE_TYPE_TEXTURE, "Texture", "Texture Mapping"),
-        Sample(SAMPLE_TYPE_TEXTURE_BUFFER, "Texture Buffer", "Texture Buffer")
+        Sample(SAMPLE_TYPE_TEXTURE_BUFFER, "Texture Buffer", "Texture Buffer"),
+        Sample(SAMPLE_TYPE_TRANSFORM, "Texture Transform", "Texture mix and transform")
     )
 }

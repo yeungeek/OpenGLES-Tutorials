@@ -6,7 +6,6 @@
 #define OPENGLES_TUTORIALS_TRANSFORMSAMPLE_H
 
 #include "../BaseSample.h"
-#define AWESOMEFACE_PATH BASE_TEXTURES_PATH "awesomeface.png"
 
 namespace Transform {
 

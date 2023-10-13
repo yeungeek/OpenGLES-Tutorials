@@ -69,7 +69,7 @@ namespace TextureSample {
         }
 
         int width, height, n;
-        unsigned char *data = stbi_load(HEAD_PATH, &width, &height, &n, 0);
+        unsigned char *data = stbi_load(FACE_PATH, &width, &height, &n, 0);
         LOGD("###### width:%d,height:%d,channel:%d", width, height, n);
 
         //1. gen texture

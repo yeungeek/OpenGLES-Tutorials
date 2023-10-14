@@ -9,6 +9,8 @@
 #include "../third_party/glm/glm.hpp"
 #include "../third_party/glm/gtc/matrix_transform.hpp"
 #include "../third_party/glm/gtc/type_ptr.hpp"
+#include <iostream>
+#include <ctime>
 
 namespace Transform {
     GLfloat mVertices[] = {
@@ -32,31 +34,6 @@ namespace Transform {
     TransformSample::~TransformSample() {}
 
     void TransformSample::OnCreate() {
-//        char vertexShader[] = "#version 300 es\n"
-//                              "\n"
-//                              "layout (location = 0) in vec3 aPos;\n"
-//                              "layout (location = 1) in vec2 aTexCoord;\n"
-//                              "\n"
-//                              "out vec2 TexCoord;\n"
-//                              "\n"
-//                              "void main() {\n"
-//                              "    gl_Position = vec4(aPos,1.0);\n"
-//                              "    TexCoord = aTexCoord;\n"
-//                              "}";
-//
-//        char fragmentShader[] = "#version 300 es\n"
-//                                "precision mediump float;\n"
-//                                "\n"
-//                                "out vec4 FragColor;\n"
-//                                "in vec2 TexCoord;\n"
-//                                "\n"
-//                                "uniform sampler2D texture1;\n"
-//                                "uniform sampler2D texture2;\n"
-//                                "\n"
-//                                "void main() {\n"
-//                                "    FragColor = mix(texture(texture1, TexCoord),texture(texture2, TexCoord),0.2);\n"
-//                                "}";
-
         char vertexShader[] = "#version 300 es\n"
                               "\n"
                               "layout (location = 0) in vec3 aPos;\n"
@@ -159,11 +136,15 @@ namespace Transform {
 
         // transform
         glm::mat4 trans = glm::mat4(1.0f);
-        trans = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        trans = glm::translate(trans, glm::vec3(0.5f, 0.5f, 0.0f));
 
-        glUseProgram(mProgram);
+
+        std::time_t currentTime = std::time(0);
+        long long timestamp = currentTime * 1;
+        trans = glm::rotate(trans, (float) (timestamp % 10), glm::vec3(0.0f, 0.0f, 1.0f));
+        trans = glm::scale(trans, glm::vec3(0.5f, 0.5f, 0.5f));
+
         GLint transLoc = glGetUniformLocation(mProgram, "transform");
-
         glUniformMatrix4fv(transLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
         glBindVertexArray(mVAO);

@@ -1,4 +1,4 @@
-package com.yeungeek.opengltutorial
+package com.yeungeek.opengltutorial.ui.activity
 
 import android.content.Context
 import android.content.Intent

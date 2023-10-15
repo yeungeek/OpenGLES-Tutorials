@@ -43,8 +43,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.yeungeek.opengltutorial.ShaderDetailActivity"
+            android:name="com.yeungeek.opengltutorial.ui.activity.ShaderDetailActivity"
             android:exported="true" />
+        <activity android:name="com.yeungeek.opengltutorial.ui.activity.EGLActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

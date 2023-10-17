@@ -53,15 +53,8 @@ object EGLTriangle {
     fun draw(width: Int, height: Int) {
         GLES30.glViewport(0, 0, width, height)
 
-        MatrixState.setInitStack()
 
         GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
-        val ratio = width * 1.0f / height * 1.0f
-        MatrixState.setProjectFrustum(-ratio, ratio, -1f, 1f, 2f, 100f)
-
-        MatrixState.setCamera(0f, 0f, 4f, 0f, 0f, 0f, 0f, 1f, 0f)
-
-
 
         GLES30.glVertexAttribPointer(0, 3, GLES30.GL_FLOAT, false, 0, vertexBuffer)
         GLES30.glEnableVertexAttribArray(0)

@@ -1,8 +1,8 @@
 package com.yeungeek.opengltutorial.ui.components
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.SurfaceHolder
+import android.view.SurfaceHolder.Callback
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -32,40 +32,16 @@ import androidx.compose.ui.unit.dp
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EGLDetailScreen(title: String, onBackPressed: () -> Unit) {
+fun EGLDetailScreen(callback: Callback, title: String, onBackPressed: () -> Unit) {
     Scaffold {
         Box(modifier = Modifier.fillMaxWidth()) {
-            ComposableSurfaceView(object : SurfaceHolder.Callback {
-                override fun surfaceCreated(holder: SurfaceHolder) {
-                    Log.d("EGLActivity", "###### surfaceCreated")
-                }
-
-                override fun surfaceChanged(
-                    holder: SurfaceHolder,
-                    format: Int,
-                    width: Int,
-                    height: Int
-                ) {
-                    Log.d("EGLActivity", "###### surfaceChanged")
-                }
-
-                override fun surfaceDestroyed(holder: SurfaceHolder) {
-                    Log.d("EGLActivity", "###### surfaceDestroyed")
-                }
-            })
-
+            ComposableSurfaceView(callback)
             Box(
                 modifier = Modifier
                     .height(50.dp)
                     .fillMaxWidth()
                     .background(
-                        color = Color.White,
-//                        brush = Brush.verticalGradient(
-//                            colors = listOf(
-//                                Color.Black.copy(alpha = 0.3f),
-//                                Color.Transparent,
-//                            ),
-//                        )
+                        color = Color.White
                     )
             ) {
                 Icon(
@@ -94,7 +70,19 @@ fun EGLDetailScreen(title: String, onBackPressed: () -> Unit) {
 @Preview
 @Composable
 fun EGLPreview() {
-    EGLDetailScreen("EGL Sample") {
+    EGLDetailScreen(object : Callback {
+        override fun surfaceCreated(holder: SurfaceHolder) {
+            TODO("Not yet implemented")
+        }
+
+        override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+            TODO("Not yet implemented")
+        }
+
+        override fun surfaceDestroyed(holder: SurfaceHolder) {
+            TODO("Not yet implemented")
+        }
+    }, "EGL Sample") {
 
     }
 }

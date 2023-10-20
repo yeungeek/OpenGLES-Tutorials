@@ -8,7 +8,7 @@ import java.nio.FloatBuffer
 /**
  *  Created by jian.yang on 2023/10/16.
  */
-object EGLTriangle {
+object EGLTexture {
     private val vertexPoints = floatArrayOf(
         0.0f, 0.5f, 0.0f,
         -0.5f, -0.5f, 0.0f,
@@ -43,7 +43,7 @@ object EGLTriangle {
             .order(ByteOrder.nativeOrder()).asFloatBuffer()
     }
 
-    fun initTriangle() {
+    fun initTexture() {
         GLES30.glClearColor(1f, 1f, 1f, 1f)
         val vertexShaderId = compileShader(GLES30.GL_VERTEX_SHADER, vertexShader)
         val fragmentShaderId = compileShader(GLES30.GL_FRAGMENT_SHADER, fragmentShader)

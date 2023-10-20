@@ -42,7 +42,7 @@ class EGLSample {
         EGL14.EGL_NONE
     )
 
-    fun initEGL() {
+    fun initEGL(surface: Surface) {
         //1. get display
         mEGLDisplay = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY)
         if (mEGLDisplay == EGL14.EGL_NO_DISPLAY) {
@@ -88,19 +88,19 @@ class EGLSample {
             return
         }
 
-        //init
-        EGLTriangle.initTriangle()
-    }
-
-    fun render(surface: Surface, width: Int, height: Int) {
         //5. create surface
         mEGLSurface = EGL14.eglCreateWindowSurface(mEGLDisplay, mEGLConfig, surface, EGL_SURFACE, 0)
 
         //6. current
         EGL14.eglMakeCurrent(mEGLDisplay, mEGLSurface, mEGLSurface, mEGLContext)
+//
+//        //init
+//        EGLTexture.initTexture()
+    }
 
+    fun render(width: Int, height: Int) {
         //7. draw
-        EGLTriangle.draw(width, height)
+//        EGLTexture.draw(width, height)
         //8. swap buffer
         EGL14.eglSwapBuffers(mEGLDisplay, mEGLSurface)
     }

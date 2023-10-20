@@ -1,5 +1,6 @@
 package com.yeungeek.opengltutorial.ui.activity
 
+import android.opengl.GLES30
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.SurfaceHolder.Callback
@@ -29,7 +30,8 @@ class EGLActivity : ComponentActivity() {
         mCallback = object : Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 Log.d("EGLActivity", "###### surfaceCreated")
-                mEGLSample.initEGL()
+                mEGLSample.initEGL(holder.surface)
+                GLES30.glClearColor(1.0f, 0.0f, 0.0f, 1.0f)
             }
 
             override fun surfaceChanged(
@@ -39,12 +41,14 @@ class EGLActivity : ComponentActivity() {
                 height: Int
             ) {
                 Log.d("EGLActivity", "###### surfaceChanged")
-                mEGLSample.render(holder.surface, width, height)
+                GLES30.glViewport(0, 0, width, height)
+                GLES30.glClear(GLES30.GL_COLOR_BUFFER_BIT)
+                mEGLSample.render(width, height)
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
                 Log.d("EGLActivity", "###### surfaceDestroyed")
-                mEGLSample.release()
+//                mEGLSample.release()
             }
         }
     }

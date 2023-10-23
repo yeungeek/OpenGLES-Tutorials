@@ -11,7 +11,7 @@ import android.view.Surface
 /**
  *  Created by jian.yang on 2023/10/15.
  */
-class EGLSample {
+class EGLHelper {
 
     private var mEGLDisplay: EGLDisplay = EGL14.EGL_NO_DISPLAY
     private var mEGLContext: EGLContext = EGL14.EGL_NO_CONTEXT

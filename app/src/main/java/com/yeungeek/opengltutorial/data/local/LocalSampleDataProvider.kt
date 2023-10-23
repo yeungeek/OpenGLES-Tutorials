@@ -20,7 +20,6 @@ object LocalSampleDataProvider {
         Sample(SAMPLE_TYPE_TEXTURE, "Texture", "Texture Mapping"),
         Sample(SAMPLE_TYPE_TEXTURE_BUFFER, "Texture Buffer", "Texture Buffer"),
         Sample(SAMPLE_TYPE_TRANSFORM, "Texture Transform", "Texture mix and transform"),
-
         Sample(SAMPLE_EGL, "EGLSample", "EGL")
     )
 }

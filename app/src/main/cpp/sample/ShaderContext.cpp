@@ -9,6 +9,7 @@
 #include "basic/TextureSample.h"
 #include "basic/TextureBufferSample.h"
 #include "basic/TransformSample.h"
+#include "basic/CoordSystemSample.h"
 
 ShaderContext *ShaderContext::mContext = nullptr;
 
@@ -34,6 +35,9 @@ ShaderContext::ShaderContext(int id) {
             break;
         case SAMPLE_TYPE_TRANSFORM:
             mBaseSample = new Transform::TransformSample();
+            break;
+        case SAMPLE_TYPE_COORDINATE:
+            mBaseSample = new CoordSystem::CoordSystemSample();
             break;
         default:
             mBaseSample = new TriangleSample();

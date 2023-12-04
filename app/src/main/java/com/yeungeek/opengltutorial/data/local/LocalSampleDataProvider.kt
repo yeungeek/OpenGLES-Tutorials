@@ -9,6 +9,7 @@ object LocalSampleDataProvider {
     private const val SAMPLE_TYPE_TEXTURE = SAMPLE_TYPE + 3
     private const val SAMPLE_TYPE_TEXTURE_BUFFER = SAMPLE_TYPE + 4
     private const val SAMPLE_TYPE_TRANSFORM = SAMPLE_TYPE + 5
+    private const val SAMPLE_TYPE_COORDINATE = SAMPLE_TYPE + 6
 
     const val SAMPLE_EGL = SAMPLE_TYPE + 1000
 
@@ -20,6 +21,8 @@ object LocalSampleDataProvider {
         Sample(SAMPLE_TYPE_TEXTURE, "Texture", "Texture Mapping"),
         Sample(SAMPLE_TYPE_TEXTURE_BUFFER, "Texture Buffer", "Texture Buffer"),
         Sample(SAMPLE_TYPE_TRANSFORM, "Texture Transform", "Texture mix and transform"),
+        Sample(SAMPLE_TYPE_COORDINATE, "Coordinate", "Coordinate system - MVP Matrix"),
+
         Sample(SAMPLE_EGL, "EGLSample", "EGL")
     )
 }

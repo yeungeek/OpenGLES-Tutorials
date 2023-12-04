@@ -65,6 +65,7 @@ void TriangleSample::OnDraw(int width, int height) {
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
     glDisableVertexAttribArray(0);
+
 }
 
 void TriangleSample::OnDestroy() {

@@ -28,9 +28,8 @@ namespace CoordSystem {
         GLint mSamplerLoc;
         GLint mMVPMatLoc;
         GLuint mTextureId;
-        GLuint mVAOId;
-        GLuint mVBOIds[3];
         glm::mat4 mMVPMatrix;
+        GLuint mVBO, mVAO, mEBO;
     };
 }
 

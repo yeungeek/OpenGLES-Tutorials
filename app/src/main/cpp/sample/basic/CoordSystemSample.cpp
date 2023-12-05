@@ -9,28 +9,20 @@
 
 namespace CoordSystem {
     GLfloat mVertices[] = {
-            -0.5f, 0.5f, 0.0f,  // Position 0
-            -0.5f, -0.5f, 0.0f,  // Position 1
-            0.5f, -0.5f, 0.0f,  // Position 2
-            0.5f, 0.5f, 0.0f // Position 3
+            //xyz, rgb, st
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f
     };
-
-    GLfloat mTextureCoords[] = {
-            0.0f, 0.0f,        // TexCoord 0
-            0.0f, 1.0f,        // TexCoord 1
-            1.0f, 1.0f,        // TexCoord 2
-            1.0f, 0.0f         // TexCoord 3
-    };
-
-    GLfloat mIndices[] = {
+    GLushort mIndices[] = {
             0, 1, 2,
             0, 2, 3
     };
 
     CoordSystemSample::CoordSystemSample() {
         LOGD("###### CoordSystemSample init");
-        mSamplerLoc = GL_NONE;
-        mMVPMatLoc = GL_NONE;
+
     }
 
     CoordSystemSample::~CoordSystemSample() {}
@@ -42,90 +34,67 @@ namespace CoordSystem {
         }
 
         char vertexShader[] = "#version 300 es\n"
-                              "\n"
-                              "layout(location = 0) in vec3 aPos;\n"
-                              "layout(location = 1) in vec2 aTexCoord;\n"
-                              "\n"
-                              "uniform mat4 uMVPMatrix;\n"
-                              "out vec2 vTexCoord;\n"
-                              "\n"
+                              "layout (location = 0) in vec3 aPos;\n"
+                              "layout (location = 1) in vec2 aTexCoord;\n"
+                              "out vec2 TexCoord;\n"
                               "void main() {\n"
-                              "    gl_Position = vec4(aPos,1.0);\n"
-                              "    vTexCoord = aTexCoord;\n"
+                              "    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                              "    TexCoord = aTexCoord;\n"
                               "}";
 
         char fragmentShader[] = "#version 300 es\n"
                                 "precision mediump float;\n"
-                                "in vec2 vTexCoord;\n"
-                                "layout (location = 0) out vec4 vFragColor;\n"
-                                "uniform sampler2D sTextureMap;\n"
-                                "\n"
+                                "out vec4 FragColor;\n"
+                                "in vec2 TexCoord;\n"
+                                "uniform sampler2D ourTexture;\n"
                                 "void main() {\n"
-                                "    vFragColor = texture(sTextureMap, vTexCoord);\n"
+                                "    FragColor = texture(ourTexture, TexCoord);\n"
                                 "}";
 
         mProgram = GLUtils::CreateProgram(vertexShader, fragmentShader, mVertexShaderId,
                                           mFragmentShaderId);
-        GLUtils::CheckGLError("###### CreateProgram");
 
-        if (mProgram) {
-            mSamplerLoc = glGetUniformLocation(mProgram, "sTextureMap");
-            mMVPMatLoc = glGetUniformLocation(mProgram, "uMVPMatrix");
-        }
-
-        // Texture
+        //1.texture
         glGenTextures(1, &mTextureId);
         glBindTexture(GL_TEXTURE_2D, mTextureId);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        //2.set filter
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glBindTexture(GL_TEXTURE_2D, GL_NONE);
 
-
-        // Create VBO
-        glGenBuffers(3, mVBOIds);
-        glBindBuffer(GL_ARRAY_BUFFER, mVBOIds[0]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices), mVertices, GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ARRAY_BUFFER, mVBOIds[1]);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(mTextureCoords), mTextureCoords, GL_STATIC_DRAW);
-
-        // EBO
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVBOIds[2]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mIndices), mIndices, GL_STATIC_DRAW);
-
-        // VAO
-        glGenVertexArrays(1, &mVAOId);
-        glBindVertexArray(mVAOId);
-
-        glBindBuffer(GL_ARRAY_BUFFER, mVBOIds[0]);
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (void *) 0);
-        glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
-
-        glBindBuffer(GL_ARRAY_BUFFER, mVBOIds[1]);
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void *) 0);
-        glBindBuffer(GL_ARRAY_BUFFER, GL_NONE);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mVBOIds[2]);
-
-        glBindVertexArray(GL_NONE);
-
-        // load image
         int width, height, n;
+        // flip y
         stbi_set_flip_vertically_on_load(true);
+
         unsigned char *data = stbi_load(CONTAINER_PATH, &width, &height, &n, 0);
 
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
         if (data) {
-            LOGD("##### load image success!");
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNALED, data);
+            LOGD("###### width:%d,height:%d,channel:%d", width, height, n);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                         data);
         }
-        glBindTexture(GL_TEXTURE_2D, GL_NONE);
+
+        //3. VBO,EBO,VAO
+        glGenBuffers(1, &mVBO);
+        glGenBuffers(1, &mEBO);
+
+        glGenVertexArrays(1, &mVAO);
+        glBindVertexArray(mVAO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices), mVertices, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mIndices), mIndices, GL_STATIC_DRAW);
+        //1.xyz
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void *) 0);
+        glEnableVertexAttribArray(0);
+
+        //2.st  offset = x,y,z 3*4
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
+                              (void *) (3 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(1);
 
         stbi_image_free(data);
         glUseProgram(mProgram);
@@ -135,21 +104,10 @@ namespace CoordSystem {
         if (mProgram == 0) {
             return;
         }
+
         glClear(GL_COLOR_BUFFER_BIT);
-
-//        UpdateMVPMatrix(mMVPMatrix, 0, 0, (float) width / height);
-        // MVP matrix
-
-        glUseProgram(mProgram);
-        glBindVertexArray(mVAOId);
-
-//        glUniformMatrix4fv(mMVPMatLoc, 1, GL_FALSE, &mMVPMatrix[0][0]);
-
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
-        glUniform1i(mSamplerLoc, 0);
-
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (const void *) 0);
+        glBindVertexArray(mVAO);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (void *) 0);
     }
 
     void CoordSystemSample::OnDestroy() {
@@ -159,36 +117,5 @@ namespace CoordSystem {
             glDeleteProgram(mProgram);
             mProgram = GL_NONE;
         }
-    }
-
-    void CoordSystemSample::UpdateMVPMatrix(glm::mat4 &mvpMatrix, int angleX, int angleY,
-                                            float ratio) {
-//        LOGD("###### UpdateMVPMatrix: angleX = %d, angleY = %d, ratio = %f", angleX, angleY, ratio);
-
-        angleX = angleX % 360;
-        angleY = angleY % 360;
-
-        // change to radians
-        float radiansX = static_cast<float>(MATH_PI / 180 * angleX);
-        float radiansY = static_cast<float>(MATH_PI / 180 * angleY);
-
-        //Projection Matrix
-        glm::mat4 projection = glm::perspective(45.0f, ratio, 0.1f, 100.0f);
-
-        //View Matrix
-        glm::mat4 view = glm::lookAt(
-                glm::vec3(0, 0, 4),
-                glm::vec3(0, 0, 0),
-                glm::vec3(0, 1, 0)
-        );
-
-        //Model Matrix
-        glm::mat4 model = glm::mat4(1.0f);
-        //scale
-        model = glm::rotate(model, radiansX, glm::vec3(1.0f, 0.0f, 0.0f));
-        model = glm::rotate(model, radiansY, glm::vec3(0.0f, 1.0f, 0.0f));
-        model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-
-        mvpMatrix = projection * view * model;
     }
 }

@@ -8,6 +8,7 @@
 #include "../BaseSample.h"
 #include <detail/type_mat4x4.hpp>
 #include <gtc/matrix_transform.hpp>
+#include <string>
 
 namespace CoordSystem {
     class CoordSystemSample : public BaseSample {
@@ -22,13 +23,11 @@ namespace CoordSystem {
 
         virtual void OnDestroy();
 
-        void UpdateMVPMatrix(glm::mat4 &mvpMatrix, int angleX, int angleY, float ratio);
+        void setMat4(const GLuint &program, const std::string &name, const glm::mat4 &mat);
 
     private:
-        GLint mSamplerLoc;
-        GLint mMVPMatLoc;
         GLuint mTextureId;
-        glm::mat4 mMVPMatrix;
+        glm::mat4 mModel, mView, mProjection;
         GLuint mVBO, mVAO, mEBO;
     };
 }

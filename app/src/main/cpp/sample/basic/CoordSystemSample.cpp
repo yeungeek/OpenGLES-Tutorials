@@ -22,7 +22,7 @@ namespace CoordSystem {
 
     CoordSystemSample::CoordSystemSample() {
         LOGD("###### CoordSystemSample init");
-
+        mModel = glm::mat4(1.0f);
     }
 
     CoordSystemSample::~CoordSystemSample() {}
@@ -37,8 +37,11 @@ namespace CoordSystem {
                               "layout (location = 0) in vec3 aPos;\n"
                               "layout (location = 1) in vec2 aTexCoord;\n"
                               "out vec2 TexCoord;\n"
+                              "uniform mat4 model;\n"
+                              "uniform mat4 view;\n"
+                              "uniform mat4 projection;\n"
                               "void main() {\n"
-                              "    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+                              "    gl_Position = projection * view * model * vec4(aPos, 1.0);\n"
                               "    TexCoord = aTexCoord;\n"
                               "}";
 
@@ -106,6 +109,19 @@ namespace CoordSystem {
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 projection = glm::mat4(1.0f);
+
+        model = glm::rotate(model, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -6.0f));
+        projection = glm::perspective(glm::radians(45.f), width / (float) height, 0.1f, 100.f);
+
+        setMat4(mProgram, "model", model);
+        setMat4(mProgram, "view", view);
+        setMat4(mProgram, "projection", projection);
+
         glBindVertexArray(mVAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, (void *) 0);
     }
@@ -117,5 +133,10 @@ namespace CoordSystem {
             glDeleteProgram(mProgram);
             mProgram = GL_NONE;
         }
+    }
+
+    void CoordSystemSample::setMat4(const GLuint &program, const std::string &name,
+                                    const glm::mat4 &mat) {
+        glUniformMatrix4fv(glGetUniformLocation(program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
     }
 }

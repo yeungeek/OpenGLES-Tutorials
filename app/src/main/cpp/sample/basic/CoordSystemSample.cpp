@@ -22,7 +22,6 @@ namespace CoordSystem {
 
     CoordSystemSample::CoordSystemSample() {
         LOGD("###### CoordSystemSample init");
-        mModel = glm::mat4(1.0f);
     }
 
     CoordSystemSample::~CoordSystemSample() {}

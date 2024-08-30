@@ -5,6 +5,7 @@
 #include "../../util/GLUtils.h"
 #include "../../util/AndroidDebug.h"
 
+// 逆时针的顶点连接顺序被定义为三角形的正面
 GLfloat mVertices[] = {
         -0.5f, -0.5f, 0.0f,
         0.5f, -0.5f, 0.0f,
@@ -48,6 +49,22 @@ void TriangleSample::OnCreate() {
 
     glUseProgram(mProgram);
     LOGD("###### Program init %d", mProgram);
+    //1. use vbo
+    glGenBuffers(1, &mVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+    glBufferData(GL_ARRAY_BUFFER,sizeof(mVertices),mVertices,GL_STATIC_DRAW);
+
+    //2. use vao
+    glGenVertexArrays(1,&mVAO);
+    glBindVertexArray(mVAO);
+    //load vertex data
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
+    //1. vbo
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void *) 0);
+    glEnableVertexAttribArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 void TriangleSample::OnDraw(int width, int height) {
@@ -55,17 +72,19 @@ void TriangleSample::OnDraw(int width, int height) {
         return;
     }
     //clear
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(mProgram);
+    //2. use vao TODO
+    glBindVertexArray(mVAO);
     //load vertex data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
-    glEnableVertexAttribArray(0);
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
+//    glEnableVertexAttribArray(0);
     //draw
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
-    glDisableVertexAttribArray(0);
-
+//    glDisableVertexAttribArray(0);
 }
 
 void TriangleSample::OnDestroy() {
@@ -74,4 +93,6 @@ void TriangleSample::OnDestroy() {
         glDeleteProgram(mProgram);
         mProgram = GL_NONE;
     }
+    glDeleteBuffers(1,&mVBO);
+    glDisableVertexAttribArray(0);
 }

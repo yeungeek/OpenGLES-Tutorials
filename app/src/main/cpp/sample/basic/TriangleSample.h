@@ -10,10 +10,17 @@
 class TriangleSample : public BaseSample {
 public:
     TriangleSample();
+
     virtual ~TriangleSample();
+
     virtual void OnCreate();
+
     virtual void OnDraw(int width, int height);
+
     virtual void OnDestroy();
+
+private:
+    GLuint mVBO, mVAO;
 };
 
 #endif //OPENGLTUTORIAL_TRIANGLESAMPLE_H

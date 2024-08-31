@@ -6,10 +6,24 @@
 #include "../../util/AndroidDebug.h"
 
 // 逆时针的顶点连接顺序被定义为三角形的正面
+//1.arrays
+//GLfloat mVertices[] = {
+//        -0.5f, -0.5f, 0.0f,
+//        0.5f, -0.5f, 0.0f,
+//        0.0f, 0.5f, 0.0f
+//};
+//2. elements
 GLfloat mVertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f
+        0.5f, 0.5f, 0.0f, //top right
+        0.5f, -0.5f, 0.0f,//bottom right
+        -0.5f, -0.5f, 0.0f,//bottom left
+        -0.5f, 0.5f, 0.0f//bottom right
+};
+//3.
+
+GLuint mIndices[] = {
+        0, 1, 2 //first
+//        0, 2, 3  //second
 };
 
 const GLsizei stride = 3 * sizeof(GLfloat);
@@ -50,13 +64,18 @@ void TriangleSample::OnCreate() {
     glUseProgram(mProgram);
     LOGD("###### Program init %d", mProgram);
     //1. use vbo
+    //2. use ebo
     glGenBuffers(1, &mVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-    glBufferData(GL_ARRAY_BUFFER,sizeof(mVertices),mVertices,GL_STATIC_DRAW);
-
+    glGenBuffers(1, &mEBO);
     //2. use vao
-    glGenVertexArrays(1,&mVAO);
+    glGenVertexArrays(1, &mVAO);
     glBindVertexArray(mVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices), mVertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mIndices), mIndices, GL_STATIC_DRAW);
     //load vertex data
 //    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
     //1. vbo
@@ -82,7 +101,11 @@ void TriangleSample::OnDraw(int width, int height) {
 //    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
 //    glEnableVertexAttribArray(0);
     //draw
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //1. vbo
+//    glDrawArrays(GL_TRIANGLES, 0, 3);
+    //3.ebo
+
+    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
 
 //    glDisableVertexAttribArray(0);
 }
@@ -93,6 +116,6 @@ void TriangleSample::OnDestroy() {
         glDeleteProgram(mProgram);
         mProgram = GL_NONE;
     }
-    glDeleteBuffers(1,&mVBO);
+    glDeleteBuffers(1, &mVBO);
     glDisableVertexAttribArray(0);
 }

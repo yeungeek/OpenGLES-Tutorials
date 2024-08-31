@@ -20,7 +20,7 @@ public:
     virtual void OnDestroy();
 
 private:
-    GLuint mVBO, mVAO;
+    GLuint mVBO, mVAO,mEBO;
 };
 
 #endif //OPENGLTUTORIAL_TRIANGLESAMPLE_H

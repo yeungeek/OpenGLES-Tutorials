@@ -13,13 +13,22 @@
 //        0.0f, 0.5f, 0.0f
 //};
 //2. elements
+//GLfloat mVertices[] = {
+//        0.5f, 0.5f, 0.0f, //top right
+//        0.5f, -0.5f, 0.0f,//bottom right
+//        -0.5f, -0.5f, 0.0f,//bottom left
+//        -0.5f, 0.5f, 0.0f//bottom right
+//};
+
+//3.exercise
 GLfloat mVertices[] = {
-        0.5f, 0.5f, 0.0f, //top right
-        0.5f, -0.5f, 0.0f,//bottom right
-        -0.5f, -0.5f, 0.0f,//bottom left
-        -0.5f, 0.5f, 0.0f//bottom right
+        -1.0f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.0f,
+        0.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.0f,
+        1.0f, 0.0f, 0.0f
 };
-//3.
 
 GLuint mIndices[] = {
         0, 1, 2 //first
@@ -74,8 +83,9 @@ void TriangleSample::OnCreate() {
     glBindBuffer(GL_ARRAY_BUFFER, mVBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices), mVertices, GL_STATIC_DRAW);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,mEBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mIndices), mIndices, GL_STATIC_DRAW);
+//    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+//    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mIndices), mIndices, GL_STATIC_DRAW);
+
     //load vertex data
 //    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, mVertices);
     //1. vbo
@@ -103,9 +113,10 @@ void TriangleSample::OnDraw(int width, int height) {
     //draw
     //1. vbo
 //    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
     //3.ebo
 
-    glDrawElements(GL_TRIANGLES,6,GL_UNSIGNED_INT,0);
+//    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 //    glDisableVertexAttribArray(0);
 }

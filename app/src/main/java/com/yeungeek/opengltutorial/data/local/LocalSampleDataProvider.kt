@@ -5,6 +5,7 @@ import com.yeungeek.opengltutorial.data.Sample
 object LocalSampleDataProvider {
     private const val SAMPLE_TYPE = 1000
     private const val SAMPLE_TYPE_TRIANGLE = SAMPLE_TYPE + 1
+    private const val SAMPLE_TYPE_TRIANGLE_EXERCISE = SAMPLE_TYPE + 1001
     private const val SAMPLE_TYPE_SHAPE_RECTANGLE = SAMPLE_TYPE + 2
     private const val SAMPLE_TYPE_TEXTURE = SAMPLE_TYPE + 3
     private const val SAMPLE_TYPE_TEXTURE_BUFFER = SAMPLE_TYPE + 4
@@ -17,6 +18,7 @@ object LocalSampleDataProvider {
 
     val allSamples = listOf(
         Sample(SAMPLE_TYPE_TRIANGLE, "Triangle", "Basic Triangle"),
+        Sample(SAMPLE_TYPE_TRIANGLE_EXERCISE, "Triangle", "Triangle Exercise"),
         Sample(SAMPLE_TYPE_SHAPE_RECTANGLE, "Rectangle", "Shape"),
         Sample(SAMPLE_TYPE_TEXTURE, "Texture", "Texture Mapping"),
         Sample(SAMPLE_TYPE_TEXTURE_BUFFER, "Texture Buffer", "Texture Buffer"),

@@ -15,6 +15,8 @@
 #define SAMPLE_TYPE_TRANSFORM SAMPLE_TYPE + 5
 #define SAMPLE_TYPE_COORDINATE SAMPLE_TYPE + 6
 
+#define SAMPLE_TYPE_TRIANGLE_EXERCISE SAMPLE_TYPE + 1001
+
 #define BASE_ASSET_PATH "/data/data/com.yeungeek.opengltutorial/files/"
 #define BASE_TEXTURES_PATH BASE_ASSET_PATH "textures/"
 

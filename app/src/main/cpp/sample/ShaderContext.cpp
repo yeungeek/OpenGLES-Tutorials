@@ -5,6 +5,7 @@
 #include "ShaderContext.h"
 #include "../util/AndroidDebug.h"
 #include "basic/TriangleSample.h"
+#include "basic/TriangleExercise.h"
 #include "basic/ShapeSample.h"
 #include "basic/TextureSample.h"
 #include "basic/TextureBufferSample.h"
@@ -23,6 +24,9 @@ ShaderContext::ShaderContext(int id) {
     switch (id) {
         case SAMPLE_TYPE_TRIANGLE:
             mBaseSample = new TriangleSample();
+            break;
+        case SAMPLE_TYPE_TRIANGLE_EXERCISE:
+            mBaseSample = new TriangleExercise();
             break;
         case SAMPLE_TYPE_SHAPE_RECTANGLE:
             mBaseSample = new ShapeSample();

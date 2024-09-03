@@ -50,12 +50,25 @@ void TriangleExercise::OnCreate() {
             "   fragColor = vec4 ( 1.0, 0.0, 0.0, 1.0 );  \n"
             "}                                            \n";
 
+    char fragmentShader1[] =
+            "#version 300 es                              \n"
+            "precision mediump float;                     \n"
+            "out vec4 fragColor;                          \n"
+            "void main()                                  \n"
+            "{                                            \n"
+            "   fragColor = vec4 ( 1.0, 1.0, 0.0, 1.0 );  \n"
+            "}                                            \n";
+
 
     mProgram = GLUtils::CreateProgram(vertexShader, fragmentShader, mVertexShaderId,
                                       mFragmentShaderId);
 
-    glUseProgram(mProgram);
-    LOGD("###### Program init: %d", mProgram);
+    mProgram1 = GLUtils::CreateProgram(vertexShader, fragmentShader1, mVertexShaderId,
+                                      mFragmentShaderId);
+
+//    glUseProgram(mProgram);
+//    glUseProgram(mProgram1);
+//    LOGD("###### Program init: %d", mProgram);
 
     glGenBuffers(2, mVBOs);
     glGenVertexArrays(2, mVAOs);
@@ -86,6 +99,7 @@ void TriangleExercise::OnDraw(int width, int height) {
     glBindVertexArray(mVAOs[0]);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
+    glUseProgram(mProgram1);
     glBindVertexArray(mVAOs[1]);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }

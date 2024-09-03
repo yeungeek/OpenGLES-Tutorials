@@ -21,6 +21,7 @@ public:
 
 private:
     GLuint mVBOs[2], mVAOs[2];
+    GLuint mProgram1;
 };
 
 

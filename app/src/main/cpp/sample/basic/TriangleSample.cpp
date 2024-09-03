@@ -7,11 +7,11 @@
 
 // 逆时针的顶点连接顺序被定义为三角形的正面
 //1.arrays
-//GLfloat mVertices[] = {
-//        -0.5f, -0.5f, 0.0f,
-//        0.5f, -0.5f, 0.0f,
-//        0.0f, 0.5f, 0.0f
-//};
+GLfloat mVertices[] = {
+        -0.5f, -0.5f, 0.0f,
+        0.5f, -0.5f, 0.0f,
+        0.0f, 0.5f, 0.0f
+};
 //2. elements
 //GLfloat mVertices[] = {
 //        0.5f, 0.5f, 0.0f, //top right
@@ -21,14 +21,14 @@
 //};
 
 //3.exercise
-GLfloat mVertices[] = {
-        -1.0f, 0.0f, 0.0f,
-        -0.5f, 0.5f, 0.0f,
-        0.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f,
-        0.5f, 0.5f, 0.0f,
-        1.0f, 0.0f, 0.0f
-};
+//GLfloat mVertices[] = {
+//        -1.0f, 0.0f, 0.0f,
+//        -0.5f, 0.5f, 0.0f,
+//        0.0f, 0.0f, 0.0f,
+//        0.0f, 0.0f, 0.0f,
+//        0.5f, 0.5f, 0.0f,
+//        1.0f, 0.0f, 0.0f
+//};
 
 GLuint mIndices[] = {
         0, 1, 2 //first
@@ -112,8 +112,8 @@ void TriangleSample::OnDraw(int width, int height) {
 //    glEnableVertexAttribArray(0);
     //draw
     //1. vbo
-//    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+//    glDrawArrays(GL_TRIANGLES, 0, 6);
     //3.ebo
 
 //    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

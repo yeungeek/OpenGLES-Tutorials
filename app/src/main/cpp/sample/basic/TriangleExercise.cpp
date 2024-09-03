@@ -14,6 +14,20 @@ TriangleExercise::~TriangleExercise() {
     LOGD("###### TriangleExercise destroy");
 }
 
+GLfloat mVertices0[] = {
+        -0.5f, 0.0f, 0.0f,
+        0.5f, 0.0f, 0.0f,
+        0.0f, 0.5f, 0.0f
+};
+
+GLfloat mVertices1[] = {
+        -0.5f, 0.0f, 0.0f,
+        0.5f, 0.0f, 0.0f,
+        0.0f, -0.5f, 0.0f
+};
+
+const GLsizei stride = 3 * sizeof(GLfloat);
+
 void TriangleExercise::OnCreate() {
     if (mProgram != 0) {
         return;
@@ -43,6 +57,20 @@ void TriangleExercise::OnCreate() {
     glUseProgram(mProgram);
     LOGD("###### Program init: %d", mProgram);
 
+    glGenBuffers(2, mVBOs);
+    glGenVertexArrays(2, mVAOs);
+
+    glBindVertexArray(mVAOs[0]);
+    glBindBuffer(GL_ARRAY_BUFFER, mVBOs[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices0), mVertices0, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void *) 0);
+    glEnableVertexAttribArray(0);
+
+    glBindVertexArray(mVAOs[1]);
+    glBindBuffer(GL_ARRAY_BUFFER, mVBOs[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(mVertices1), mVertices1, GL_STATIC_DRAW);
+    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,stride,(void *)0);
+    glEnableVertexAttribArray(0);
 }
 
 void TriangleExercise::OnDraw(int width, int height) {
@@ -52,6 +80,14 @@ void TriangleExercise::OnDraw(int width, int height) {
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+
+    glUseProgram(mProgram);
+
+    glBindVertexArray(mVAOs[0]);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    glBindVertexArray(mVAOs[1]);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void TriangleExercise::OnDestroy() {
@@ -59,4 +95,8 @@ void TriangleExercise::OnDestroy() {
         glDeleteProgram(mProgram);
         mProgram = 0;
     }
+
+    glDeleteBuffers(2,mVBOs);
+    glDeleteBuffers(2,mVAOs);
+    glDisableVertexAttribArray(0);
 }

@@ -20,7 +20,7 @@ public:
     virtual void OnDestroy();
 
 private:
-//    GLuint mVBO[2], mVAO[2];
+    GLuint mVBOs[2], mVAOs[2];
 };
 
 

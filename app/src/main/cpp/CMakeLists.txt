@@ -38,7 +38,6 @@ file(GLOB src-files
         ${CMAKE_SOURCE_DIR}/sample/basic/*.cpp
         )
 
-
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # Provides a relative path to your source file(s).
         ${src-files})

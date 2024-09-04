@@ -5,10 +5,12 @@
 #include "ShaderContext.h"
 #include "../util/AndroidDebug.h"
 #include "basic/TriangleSample.h"
+#include "basic/TriangleExercise.h"
 #include "basic/ShapeSample.h"
 #include "basic/TextureSample.h"
 #include "basic/TextureBufferSample.h"
 #include "basic/TransformSample.h"
+#include "basic/CoordSystemSample.h"
 
 ShaderContext *ShaderContext::mContext = nullptr;
 
@@ -23,6 +25,9 @@ ShaderContext::ShaderContext(int id) {
         case SAMPLE_TYPE_TRIANGLE:
             mBaseSample = new TriangleSample();
             break;
+        case SAMPLE_TYPE_TRIANGLE_EXERCISE:
+            mBaseSample = new TriangleExercise();
+            break;
         case SAMPLE_TYPE_SHAPE_RECTANGLE:
             mBaseSample = new ShapeSample();
             break;
@@ -34,6 +39,9 @@ ShaderContext::ShaderContext(int id) {
             break;
         case SAMPLE_TYPE_TRANSFORM:
             mBaseSample = new Transform::TransformSample();
+            break;
+        case SAMPLE_TYPE_COORDINATE:
+            mBaseSample = new CoordSystem::CoordSystemSample();
             break;
         default:
             mBaseSample = new TriangleSample();

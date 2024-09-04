@@ -1,6 +1,7 @@
 package com.yeungeek.opengltutorial
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -18,6 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.adaptive.calculateDisplayFeatures
 import com.yeungeek.opengltutorial.data.Sample
+import com.yeungeek.opengltutorial.data.local.LocalSampleDataProvider
+import com.yeungeek.opengltutorial.ui.activity.EGLActivity
+import com.yeungeek.opengltutorial.ui.activity.ShaderDetailActivity
 import com.yeungeek.opengltutorial.ui.components.SampleListContent
 import com.yeungeek.opengltutorial.ui.theme.OpenGLTutorialTheme
 import com.yeungeek.opengltutorial.util.FileUtil
@@ -39,7 +43,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     SampleApp { sample ->
-                        startActivity(ShaderDetailActivity.newIntent(this, sample))
+                        run {
+                            if (sample.id == LocalSampleDataProvider.SAMPLE_EGL) {
+                                Log.d("DEBUG", "###### EGL Activity")
+                                startActivity(Intent(this, EGLActivity::class.java))
+                            } else {
+                                startActivity(ShaderDetailActivity.newIntent(this, sample))
+                            }
+                        }
                     }
                 }
             }

@@ -29,8 +29,10 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:debuggable="true"
         android:theme="@style/Theme.OpenGLTutorial"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:ignore="HardcodedDebugMode">
         <activity
             android:name="com.yeungeek.opengltutorial.MainActivity"
             android:exported="true"
@@ -43,8 +45,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.yeungeek.opengltutorial.ShaderDetailActivity"
+            android:name="com.yeungeek.opengltutorial.ui.activity.ShaderDetailActivity"
             android:exported="true" />
+        <activity android:name="com.yeungeek.opengltutorial.ui.activity.EGLActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

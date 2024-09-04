@@ -93,6 +93,11 @@ namespace TextureSample {
         stbi_image_free(data);
 
         glUseProgram(mProgram);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), mVerticesCoords);
+        glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mTextureCoords);
+        glEnableVertexAttribArray(1);
     }
 
     void TextureSample::OnDraw(int width, int height) {
@@ -102,13 +107,7 @@ namespace TextureSample {
 
         //clear
         glClear(GL_COLOR_BUFFER_BIT);
-
-        glUseProgram(mProgram);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), mVerticesCoords);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mTextureCoords);
-        glEnableVertexAttribArray(1);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         // bind
         glActiveTexture(GL_TEXTURE_2D);

@@ -11,6 +11,7 @@
 #include "basic/TextureBufferSample.h"
 #include "basic/TransformSample.h"
 #include "basic/CoordSystemSample.h"
+#include "basic/TextureMappingExercise.h"
 
 ShaderContext *ShaderContext::mContext = nullptr;
 
@@ -36,6 +37,9 @@ ShaderContext::ShaderContext(int id) {
             break;
         case SAMPLE_TYPE_TEXTURE_BUFFER:
             mBaseSample = new TexBuffer::TextureBufferSample();
+            break;
+        case SAMPLE_TYPE_TEXTURE_EXERCISE:
+            mBaseSample = new TextureBuffer::TextureMappingExercise();
             break;
         case SAMPLE_TYPE_TRANSFORM:
             mBaseSample = new Transform::TransformSample();

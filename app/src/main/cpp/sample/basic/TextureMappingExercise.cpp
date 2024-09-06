@@ -44,22 +44,34 @@ namespace TextureBuffer {
                 "    TexCoord = aTexCoord;\n"
                 "}";
 
+//        char fragmentShader[] = "#version 300 es\n"
+//                                "precision mediump float;\n"
+//                                "out vec4 FragColor;\n"
+//                                "in vec3 ourColor;\n"
+//                                "in vec2 TexCoord;\n"
+//                                "uniform sampler2D ourTexture;\n"
+//                                "void main() {\n"
+//                                " FragColor = texture(ourTexture, TexCoord) * vec4(ourColor,1.0);\n"
+//                                "}";
+
+        // mix texture
         char fragmentShader[] = "#version 300 es\n"
                                 "precision mediump float;\n"
                                 "out vec4 FragColor;\n"
                                 "in vec3 ourColor;\n"
                                 "in vec2 TexCoord;\n"
-                                "uniform sampler2D ourTexture;\n"
+                                "uniform sampler2D texture1;\n"
+                                "uniform sampler2D texture2;\n"
                                 "void main() {\n"
-                                " FragColor = texture(ourTexture, TexCoord);\n"
+                                "    FragColor = mix(texture(texture1, TexCoord),texture(texture2, TexCoord),0.2);\n"
                                 "}";
 
         mProgram = GLUtils::CreateProgram(vertexShaderStr, fragmentShader, mVertexShaderId,
                                           mFragmentShaderId);
 
         //1. texture
-        glGenTextures(1, &mTextureId);
-        glBindTexture(GL_TEXTURE_2D, mTextureId);
+        glGenTextures(1, &texture1);
+        glBindTexture(GL_TEXTURE_2D, texture1);
         //2. filter
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -68,12 +80,33 @@ namespace TextureBuffer {
 
         int width, height, n;
 //        stbi_set_flip_vertically_on_load(true);
-        unsigned char *data = stbi_load(FACE_PATH, &width, &height, &n, 0);
+        unsigned char *data = stbi_load(CONTAINER_PATH, &width, &height, &n, 0);
+        if (data) {
+            LOGD("###### width:%d,height:%d,channel:%d", width, height, n);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
+                         data);
+        }
+        stbi_image_free(data);
+        glBindTexture(GL_TEXTURE_2D, GL_NONE);
+
+        glGenTextures(1,&texture2);
+        glBindTexture(GL_TEXTURE_2D, texture2);
+        //2. filter
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        data = stbi_load(FACE_PATH, &width, &height, &n, 0);
         if (data) {
             LOGD("###### width:%d,height:%d,channel:%d", width, height, n);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                          data);
         }
+        stbi_image_free(data);
+        glBindTexture(GL_TEXTURE_2D, GL_NONE);
+
+
 
         //1.vbo,ebo
         glGenBuffers(1, &mVBO);
@@ -101,14 +134,24 @@ namespace TextureBuffer {
                               (void *) (6 * sizeof(GLfloat)));
         glEnableVertexAttribArray(2);
 
-        stbi_image_free(data);
         glUseProgram(mProgram);
+        GLint l1 = glGetUniformLocation(mProgram, "texture1");
+        GLint l2 = glGetUniformLocation(mProgram, "texture2");
+        LOGD("###### gl get uniform location l1=%d, l2=%d", l1, l2);
+        glUniform1i(l1,0);
+        glUniform1i(l2,1);
     }
 
     void TextureMappingExercise::OnDraw(int width, int height) {
         //clear
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+
+        glActiveTexture(GL_TEXTURE0);   //TODO important
+        glBindTexture(GL_TEXTURE_2D, texture1);
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture2);
+
 
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
     }

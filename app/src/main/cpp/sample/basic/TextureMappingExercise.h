@@ -21,7 +21,7 @@ namespace TextureBuffer {
         virtual void OnDraw(int width, int height);
 
     private:
-        GLuint mTextureId;
+        GLuint mTextureId, texture1, texture2;
         GLint mSampleLoc;
         GLuint mVBO, mVAO, mEBO;
     };

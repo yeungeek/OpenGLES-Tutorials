@@ -10,17 +10,17 @@
 
 namespace TextureSample {
     GLfloat mVerticesCoords[] = {
-            0.5f, 0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f,
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f
+            0.5f, 0.5f, 0.0f, //top right
+            -0.5f, 0.5f, 0.0f,  //top left
+            -0.5f, -0.5f, 0.0f, //bottom left
+            0.5f, -0.5f, 0.0f  //bottom right
     };
 
     GLfloat mTextureCoords[] = {
-            1.0f, 0.0f,
-            0.0f, 0.0f,
+            1.0f, 1.0f,
             0.0f, 1.0f,
-            1.0f, 1.0f
+            0.0f, 0.0f,
+            1.0f, 0.0f
     };
 
     GLushort mIndices[] = {0, 1, 2,
@@ -69,6 +69,7 @@ namespace TextureSample {
         }
 
         int width, height, n;
+        stbi_set_flip_vertically_on_load(true);
         unsigned char *data = stbi_load(FACE_PATH, &width, &height, &n, 0);
         LOGD("###### width:%d,height:%d,channel:%d", width, height, n);
 
@@ -92,12 +93,13 @@ namespace TextureSample {
         glBindTexture(GL_TEXTURE_2D, GL_NONE);
         stbi_image_free(data);
 
-        glUseProgram(mProgram);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), mVerticesCoords);
         glEnableVertexAttribArray(0);
 
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), mTextureCoords);
         glEnableVertexAttribArray(1);
+
+        glUseProgram(mProgram);
     }
 
     void TextureSample::OnDraw(int width, int height) {

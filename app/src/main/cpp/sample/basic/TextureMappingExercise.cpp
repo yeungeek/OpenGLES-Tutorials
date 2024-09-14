@@ -16,6 +16,24 @@ namespace TextureBuffer {
             0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f     //bottom right
     };
 
+//// e2
+//    GLfloat mVertices[] = {
+//            //xyz,st(uv)
+//            0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 0.0f, //top right (1,1) -> (1.0)  1-y, flip y
+//            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,    //top left
+//            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f,   //bottom left
+//            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 2.0f, 2.0f     //bottom right
+//    };
+//
+// e3
+//    GLfloat mVertices[] = {
+//            //xyz,st(uv)
+//            0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.25f, 0.0f, //top right (1,1) -> (1.0)  1-y, flip y
+//            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f,    //top left
+//            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.25f,   //bottom left
+//            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.25f, 0.25f     //bottom right
+//    };
+
     GLushort mIndices[] = {
             0, 1, 2,
             0, 2, 3
@@ -43,7 +61,7 @@ namespace TextureBuffer {
                 "    ourColor = aColor;\n"
                 "    TexCoord = aTexCoord;\n"
                 "}";
-
+//
 //        char fragmentShader[] = "#version 300 es\n"
 //                                "precision mediump float;\n"
 //                                "out vec4 FragColor;\n"
@@ -63,9 +81,9 @@ namespace TextureBuffer {
                                 "uniform sampler2D texture1;\n"
                                 "uniform sampler2D texture2;\n"
                                 "void main() {\n"
-                                "    FragColor = mix(texture(texture1, TexCoord),texture(texture2, TexCoord),0.2);\n"
+                                "    FragColor = mix(texture(texture1, TexCoord),texture(texture2, TexCoord),0.8);\n"
                                 "}";
-
+        //"    FragColor = mix(texture(texture1, TexCoord),texture(texture2, vec2(1.0 - TexCoord.x,TexCoord.y)),0.2);\n"
         mProgram = GLUtils::CreateProgram(vertexShaderStr, fragmentShader, mVertexShaderId,
                                           mFragmentShaderId);
 
@@ -105,8 +123,6 @@ namespace TextureBuffer {
         }
         stbi_image_free(data);
         glBindTexture(GL_TEXTURE_2D, GL_NONE);
-
-
 
         //1.vbo,ebo
         glGenBuffers(1, &mVBO);

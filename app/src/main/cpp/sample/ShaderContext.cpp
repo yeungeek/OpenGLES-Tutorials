@@ -12,6 +12,7 @@
 #include "basic/TransformSample.h"
 #include "basic/CoordSystemSample.h"
 #include "basic/TextureMappingExercise.h"
+#include "basic/Coord3DSample.h"
 
 ShaderContext *ShaderContext::mContext = nullptr;
 
@@ -46,6 +47,9 @@ ShaderContext::ShaderContext(int id) {
             break;
         case SAMPLE_TYPE_COORDINATE:
             mBaseSample = new CoordSystem::CoordSystemSample();
+            break;
+        case SAMPLE_TYPE_COORDINATE_EXERCISE:
+            mBaseSample = new Coord3D::Coord3DSample();
             break;
         default:
             mBaseSample = new TriangleSample();

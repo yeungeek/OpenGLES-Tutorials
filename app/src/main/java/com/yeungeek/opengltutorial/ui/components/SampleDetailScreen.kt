@@ -77,6 +77,7 @@ fun SampleDetailScreen(sample: Sample, onBackPressed: () -> Unit) {
 
                 Text(
                     text = sample.title, modifier = Modifier.align(Alignment.Center),
+                    color = Color.White,
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.Bold
                 )
